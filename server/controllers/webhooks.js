@@ -9,7 +9,7 @@ export const clerkWebhooks = async(req,res)=>{
         const webhook = new Webhook(process.env.CLERK_WEBHOOK_SECRET)
 
         // Verifying Hearders 
-        await webhook.verify(JSON.stringify(res,body),{
+        await webhook.verify(JSON.stringify(req.body), {  
             'svix-id': req.headers["svix-id"],
             "svix-timestamp": req.headers["svix-timestamp"],
             "svix-signature": req.headers["svix-signature"]
@@ -29,7 +29,7 @@ export const clerkWebhooks = async(req,res)=>{
                     image: data.image_url,
                     resume:''
                 }
-                await User.create(userData)
+                await User.create(userData);
                 res.json({})
                 break;
             }
@@ -44,7 +44,9 @@ export const clerkWebhooks = async(req,res)=>{
                 break;
             }
             case 'user.deleted':{
-                await User.findByIdAndDelete(data.id, userData)
+                // await User.findByIdAndDelete(data.id, userData)
+                await User.findByIdAndDelete(data.id);
+
                 res.json({})
                 break;
             }
