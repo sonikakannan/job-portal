@@ -6,7 +6,7 @@ export const clerkWebhooks = async(req,res)=>{
     try{
 
         // Create aSvix instance with clerk webhook secret 
-        const webhook = new Webhook(process.env.WEBHOOK_SECRET)
+        const webhook = new Webhook(process.env.CLERK_WEBHOOK_SECRET)
 
         // Verifying Hearders 
         await webhook.verify(JSON.stringify(res,body),{
